@@ -1,6 +1,9 @@
-import { Container } from "@/app/components/ui/Container";
+import { BrandGuide } from "@/app/components/brand/BrandGuide";
+import { FadeInOnScroll } from "@/app/components/ui/FadeInOnScroll";
 import { SectionHeading } from "@/app/components/ui/SectionHeading";
-import { STRENGTHS_SECTION, type StrengthIcon } from "@/app/lib/constants";
+import { SectionShell } from "@/app/components/ui/SectionShell";
+import { BrandCard } from "@/app/components/ui/BrandCard";
+import { BRAND_GUIDE, STRENGTHS_SECTION, type StrengthIcon } from "@/app/lib/constants";
 import {
   CalendarDays,
   HeartHandshake,
@@ -30,26 +33,30 @@ function StrengthIconGraphic({ icon }: { icon: StrengthIcon }) {
 
 export function StrengthsSection() {
   return (
-    <section
-      id="strengths"
-      aria-labelledby="strengths-heading"
-      className="home-section bg-section-white"
-    >
-      <Container className="home-container !max-w-[75rem] !px-5 lg:!px-8">
+    <SectionShell id="strengths" ariaLabelledBy="strengths-heading" tone="white" connect>
+      <FadeInOnScroll>
         <SectionHeading
-          align="left"
+          eyebrow="Why LINK"
           title={STRENGTHS_SECTION.title}
           description={STRENGTHS_SECTION.description}
-          className="home-section-heading max-w-2xl"
+          className="home-section-heading"
           titleId="strengths-heading"
         />
+      </FadeInOnScroll>
 
-        <ul className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-5 lg:gap-6">
-          {STRENGTHS_SECTION.items.map((item) => (
-            <li key={item.title} className="flex">
-              <article className="flex h-full w-full rounded-[20px] border border-border bg-surface p-5 shadow-[var(--shadow-sm)] sm:p-6">
+      <BrandGuide
+        message={BRAND_GUIDE.strengths}
+        variant="pointing"
+        className="mb-6 sm:mb-8"
+      />
+
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+        {STRENGTHS_SECTION.items.map((item, index) => (
+          <li key={item.title} className="flex">
+            <FadeInOnScroll className="w-full" delay={index * 70}>
+              <BrandCard className="p-5 sm:p-6">
                 <div className="flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-[#fff9f7]">
+                  <span className="icon-wrap flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-[#fff9f7]">
                     <StrengthIconGraphic icon={item.icon} />
                   </span>
                   <div className="flex min-h-[4.5rem] flex-col gap-2">
@@ -61,11 +68,11 @@ export function StrengthsSection() {
                     </p>
                   </div>
                 </div>
-              </article>
-            </li>
-          ))}
-        </ul>
-      </Container>
-    </section>
+              </BrandCard>
+            </FadeInOnScroll>
+          </li>
+        ))}
+      </ul>
+    </SectionShell>
   );
 }

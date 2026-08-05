@@ -27,7 +27,7 @@ export function FadeInOnScroll({
           observer.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -32px 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" },
     );
 
     observer.observe(element);

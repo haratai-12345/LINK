@@ -13,7 +13,7 @@ export function FeaturedJobCard({ store }: FeaturedJobCardProps) {
   const displayFeatures = store.features.slice(0, 3);
 
   return (
-    <article className="store-card flex h-full w-full flex-col overflow-hidden rounded-[22px] border border-border bg-surface shadow-[var(--shadow-soft)]">
+    <article className="store-card brand-card flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-ui)]">
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-[linear-gradient(145deg,#fdf2f0_0%,#f6ece9_100%)]">
         {store.image ? (
           <Image

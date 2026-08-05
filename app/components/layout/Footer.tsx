@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/app/components/ui/Container";
-import { PrimaryButton } from "@/app/components/ui/PrimaryButton";
+import { LineButton } from "@/app/components/ui/LineButton";
 import {
   FOOTER_LINKS,
   LINE_CTA_LABEL,
@@ -27,9 +27,9 @@ export function Footer() {
               </p>
             </div>
 
-            <PrimaryButton href={LINE_URL} className="shrink-0 self-start sm:self-auto">
+            <LineButton href={LINE_URL} className="shrink-0 self-start sm:self-auto">
               {LINE_CTA_LABEL}
-            </PrimaryButton>
+            </LineButton>
           </div>
 
           <nav aria-label="フッターナビゲーション">

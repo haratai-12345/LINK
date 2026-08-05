@@ -33,7 +33,7 @@ function LineIcon({ size = 22 }: { size?: number }) {
 }
 
 const baseClass =
-  "line-btn inline-flex items-center justify-center gap-2.5 rounded-[24px] border border-transparent bg-line-green font-bold tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-green disabled:pointer-events-none disabled:opacity-50";
+  "line-btn inline-flex items-center justify-center gap-2.5 rounded-[24px] border border-transparent bg-[#06C755] font-bold tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C755] disabled:pointer-events-none disabled:opacity-50 [&_svg]:text-white";
 
 export function LineButton(props: LineButtonProps) {
   const {
@@ -56,7 +56,7 @@ export function LineButton(props: LineButtonProps) {
   const content = (
     <>
       <LineIcon size={large ? 24 : compact ? 16 : 22} />
-      <span>{children}</span>
+      <span className="text-white">{children}</span>
     </>
   );
 

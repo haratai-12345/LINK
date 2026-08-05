@@ -7,7 +7,7 @@ type FlowCardProps = {
 
 export function FlowCard({ step }: FlowCardProps) {
   return (
-    <article className="flow-card relative aspect-[3/2] w-full overflow-hidden rounded-[20px] border border-border bg-surface shadow-[var(--shadow-soft)]">
+    <article className="flow-card relative aspect-[3/2] w-full overflow-hidden rounded-[var(--radius-ui)] border border-border bg-surface shadow-[var(--shadow-soft)]">
       <Image
         src={step.imageSrc}
         alt={step.alt}

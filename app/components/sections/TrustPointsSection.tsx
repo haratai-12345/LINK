@@ -1,5 +1,7 @@
-import { Container } from "@/app/components/ui/Container";
-import { TRUST_POINTS, type TrustPointIcon } from "@/app/lib/constants";
+import { BRAND_GUIDE, TRUST_POINTS, type TrustPointIcon } from "@/app/lib/constants";
+import { BrandGuide } from "@/app/components/brand/BrandGuide";
+import { FadeInOnScroll } from "@/app/components/ui/FadeInOnScroll";
+import { SectionShell } from "@/app/components/ui/SectionShell";
 import {
   CircleCheck,
   MapPinned,
@@ -24,27 +26,27 @@ function TrustPointIconGraphic({ icon }: { icon: TrustPointIcon }) {
 
 export function TrustPointsSection() {
   return (
-    <section
-      aria-label="安心してご相談いただける理由"
-      className="bg-section-white pb-10 pt-6 sm:pb-12 sm:pt-8 lg:pb-14 lg:pt-10"
-    >
-      <Container className="home-container !max-w-[75rem] !px-5 !py-0 lg:!px-8">
-        <ul className="grid grid-cols-2 gap-3.5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-          {TRUST_POINTS.map((point) => (
-            <li
-              key={point.label}
-              className="flex min-h-[5.25rem] flex-col items-center justify-center gap-2 rounded-[18px] border border-border bg-surface px-3 py-3.5 shadow-[var(--shadow-sm)] sm:min-h-[5.75rem] sm:gap-2.5 sm:py-4"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-2xl border border-border/80 bg-[#fff9f7] sm:h-10 sm:w-10">
-                <TrustPointIconGraphic icon={point.icon} />
-              </span>
-              <span className="text-center text-sm font-medium leading-snug text-text">
-                {point.label}
-              </span>
+    <SectionShell ariaLabel="安心してご相談いただける理由" tone="white" compact connect>
+      <FadeInOnScroll>
+        <ul className="grid grid-cols-2 gap-3.5 lg:grid-cols-4 lg:gap-4">
+          {TRUST_POINTS.map((point, index) => (
+            <li key={point.label}>
+              <FadeInOnScroll delay={index * 60}>
+                <div className="brand-card flex min-h-[5.5rem] flex-col items-center justify-center gap-2.5 px-3 py-4 sm:min-h-[6rem]">
+                  <span className="icon-wrap flex h-10 w-10 items-center justify-center rounded-2xl border border-border/80 bg-[#fff9f7]">
+                    <TrustPointIconGraphic icon={point.icon} />
+                  </span>
+                  <span className="text-center text-sm font-medium leading-snug text-text">
+                    {point.label}
+                  </span>
+                </div>
+              </FadeInOnScroll>
             </li>
           ))}
         </ul>
-      </Container>
-    </section>
+      </FadeInOnScroll>
+
+      <BrandGuide message={BRAND_GUIDE.afterTrust} variant="wink" className="mt-6 sm:mt-8" />
+    </SectionShell>
   );
 }
