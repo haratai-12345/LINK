@@ -19,19 +19,16 @@
   --line-green-hover: #05b34c;
 
   /* Layout */
-  --content-max-width: 72rem;
+  --content-max-width: 80rem;
   --header-height: 3.5rem;
 
   /* Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  --radius-card: 24px;
 
   /* Shadow */
   --shadow-sm: 0 1px 3px rgb(32 37 36 / 0.05);
-  --shadow-md: 0 4px 20px rgb(240 212 207 / 0.4);
-  --shadow-card: 0 8px 28px rgb(240 212 207 / 0.35);
+  --shadow-soft: 0 4px 20px rgb(240 212 207 / 0.35);
+  --shadow-md: 0 8px 28px rgb(240 212 207 / 0.4);
 
   /* Typography */
   --font-sans: var(--font-noto-sans);
@@ -58,12 +55,8 @@
   --font-sans: var(--font-noto-sans);
   --font-serif: var(--font-noto-serif);
 
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-  --radius-xl: var(--radius-xl);
-
   --shadow-sm: var(--shadow-sm);
+  --shadow-soft: var(--shadow-soft);
   --shadow-md: var(--shadow-md);
 }
 
@@ -129,23 +122,49 @@ svg {
 }
 
 .campaign-card {
-  box-shadow: var(--shadow-card);
-  border: 1px solid rgb(240 212 207 / 0.5);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.campaign-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgb(240 212 207 / 0.5);
+@media (prefers-reduced-motion: no-preference) {
+  .campaign-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgb(240 212 207 / 0.45);
+  }
+}
+
+.fade-in-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease;
+}
+
+.fade-in-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .flow-card {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.flow-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgb(240 212 207 / 0.45);
+.store-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @media (min-width: 1024px) {
+    .flow-card:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 10px 28px rgb(240 212 207 / 0.45);
+    }
+
+    .store-card:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 12px 32px rgb(240 212 207 / 0.45);
+    }
+  }
 }
 
 .tag-pill {
@@ -237,9 +256,66 @@ svg {
   }
 
   .flow-card:hover,
+  .store-card:hover,
   .campaign-card:hover,
   .tag-pill:hover,
   .line-btn:hover {
     transform: none;
   }
+
+  .fade-in-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Homepage section rhythm ── */
+
+.home-section {
+  padding-block: 3rem;
+}
+
+@media (min-width: 640px) {
+  .home-section {
+    padding-block: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-section {
+    padding-block: 5rem;
+  }
+}
+
+.home-section-heading {
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .home-section-heading {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-section-heading {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.home-container {
+  max-width: 75rem;
+}
+
+.bg-section-white {
+  background-color: var(--surface);
+}
+
+.bg-section-pink {
+  background: linear-gradient(180deg, #fff9f7 0%, #fdf2f0 100%);
+}
+
+.bg-section-muted {
+  background: linear-gradient(180deg, #faf8f7 0%, #fff9f7 100%);
 }

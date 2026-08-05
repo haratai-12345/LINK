@@ -1,92 +1,117 @@
 import { Container } from "@/app/components/ui/Container";
-import { CAMPAIGNS } from "@/app/lib/constants";
+import { FadeInOnScroll } from "@/app/components/ui/FadeInOnScroll";
+import { LineButton } from "@/app/components/ui/LineButton";
+import {
+  CAMPAIGN_SECTION,
+  CAMPAIGNS,
+  LINE_URL,
+  type CampaignIcon,
+} from "@/app/lib/constants";
+import { Check, Gift, MessageCircle, Sparkles } from "lucide-react";
 
-function SparkleIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5L12 2Z"
-        fill="currentColor"
-        opacity="0.35"
-      />
-      <path
-        d="M18 14l.8 2.8L21.6 17l-2.8.8L18 20.6l-.8-2.8L14.4 17l2.8-.8L18 14Z"
-        fill="currentColor"
-        opacity="0.5"
-      />
-    </svg>
-  );
+function CampaignIconGraphic({ icon }: { icon: CampaignIcon }) {
+  const className = "h-8 w-8 text-pink-dark sm:h-9 sm:w-9";
+
+  switch (icon) {
+    case "referral":
+      return <Gift className={className} strokeWidth={1.5} aria-hidden="true" />;
+    case "dress":
+      return <Sparkles className={className} strokeWidth={1.5} aria-hidden="true" />;
+    case "concierge":
+      return (
+        <MessageCircle className={className} strokeWidth={1.5} aria-hidden="true" />
+      );
+  }
 }
 
 export function CampaignSection() {
   return (
     <section
       aria-labelledby="campaign-heading"
-      className="border-t border-border/40 bg-ivory py-6 sm:py-8"
+      className="home-section bg-section-white"
     >
-      <Container>
-        <h2 id="campaign-heading" className="sr-only">
-          キャンペーン
-        </h2>
+      <Container className="home-container !max-w-[75rem] !px-5 lg:!px-8">
+        <FadeInOnScroll>
+          <header className="home-section-heading relative max-w-2xl">
+            <p
+              aria-hidden="true"
+              className="select-none font-serif text-[clamp(1.75rem,7vw,3.75rem)] font-light uppercase leading-[1.05] tracking-[0.14em] text-pink/15"
+            >
+              {CAMPAIGN_SECTION.eyebrowEn}
+            </p>
+            <h2
+              id="campaign-heading"
+              className="relative -mt-4 font-serif text-[clamp(1.75rem,6.5vw,2.375rem)] leading-snug text-text sm:-mt-5"
+            >
+              {CAMPAIGN_SECTION.title}
+            </h2>
+            <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted sm:text-base">
+              {CAMPAIGN_SECTION.description}
+            </p>
+          </header>
+        </FadeInOnScroll>
 
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
-          {CAMPAIGNS.map((campaign) => {
-            const isPink = campaign.variant === "pink";
+        <ul className="flex flex-col gap-5 sm:gap-6 lg:gap-8">
+          {CAMPAIGNS.map((campaign, index) => (
+            <li key={campaign.id}>
+              <FadeInOnScroll delay={index * 120}>
+                <article className="campaign-card group flex flex-col gap-5 rounded-[20px] border border-border bg-surface p-5 shadow-[var(--shadow-soft)] sm:flex-row sm:items-start sm:gap-6 sm:p-6 lg:p-8">
+                  <div className="flex shrink-0 items-center justify-center self-start sm:w-[5.5rem] lg:w-[6.5rem]">
+                    <span className="flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-2xl border border-border bg-[linear-gradient(180deg,#ffffff_0%,#fff9f7_100%)] sm:h-20 sm:w-20">
+                      <CampaignIconGraphic icon={campaign.icon} />
+                    </span>
+                  </div>
 
-            return (
-              <article
-                key={campaign.id}
-                className={`campaign-card group relative overflow-hidden rounded-2xl p-5 sm:p-6 ${
-                  isPink
-                    ? "bg-[linear-gradient(135deg,#fce8e4_0%,#fdf2f0_45%,#ffffff_100%)]"
-                    : "bg-[linear-gradient(135deg,#fff8ee_0%,#fdf6ec_45%,#ffffff_100%)]"
-                }`}
-              >
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-white/40 blur-2xl"
-                />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -bottom-4 -left-4 opacity-20"
-                >
-                  <SparkleIcon />
-                </div>
+                  <div className="min-w-0 flex-1">
+                    <span className="inline-flex rounded-full border border-pink/30 bg-pink-light px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.22em] text-pink-dark">
+                      LIMITED
+                    </span>
 
-                <span
-                  className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[0.6875rem] font-medium backdrop-blur-sm ${
-                    isPink
-                      ? "bg-white/70 text-pink-dark ring-1 ring-[#f0d4cf]"
-                      : "bg-white/70 text-[#b8860b] ring-1 ring-[#ead9b8]"
-                  }`}
-                >
-                  {isPink ? "♡" : "✦"} {campaign.badge}
-                </span>
+                    <h3 className="mt-3 font-serif text-xl leading-snug text-text sm:text-2xl">
+                      {campaign.title}
+                    </h3>
 
-                <p className="mt-3 text-xs text-muted sm:text-sm">{campaign.title}</p>
-                <p
-                  className={`mt-1 font-serif text-xl leading-tight sm:text-2xl ${
-                    isPink ? "text-pink-dark" : "text-[#c9940a]"
-                  }`}
-                >
-                  {campaign.highlight}
-                </p>
-                <p className="mt-3 text-[0.625rem] leading-relaxed text-muted sm:text-xs">
-                  ※{campaign.note}
-                </p>
+                    <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-muted">
+                      {campaign.description}
+                    </p>
 
-                <div
-                  aria-hidden="true"
-                  className={`absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full text-lg opacity-60 transition-transform duration-300 group-hover:scale-110 ${
-                    isPink ? "bg-white/50" : "bg-white/60"
-                  }`}
-                >
-                  {isPink ? "🎁" : "💰"}
-                </div>
-              </article>
-            );
-          })}
-        </div>
+                    <ul className="mt-4 space-y-2.5">
+                      {campaign.bullets.map((bullet) => (
+                        <li
+                          key={bullet}
+                          className="flex items-start gap-2.5 text-[0.9375rem] leading-relaxed text-text"
+                        >
+                          <Check
+                            className="mt-0.5 h-4 w-4 shrink-0 text-pink-dark"
+                            strokeWidth={2}
+                            aria-hidden="true"
+                          />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              </FadeInOnScroll>
+            </li>
+          ))}
+        </ul>
+
+        <FadeInOnScroll className="mt-10 sm:mt-12 lg:mt-14" delay={360}>
+          <div className="mx-auto w-full max-w-lg">
+            <LineButton
+              href={LINE_URL}
+              large
+              fullWidth
+              className="min-h-[56px] shadow-[0_10px_28px_rgb(6_199_85/0.32)] sm:min-h-[60px]"
+            >
+              {CAMPAIGN_SECTION.ctaLabel}
+            </LineButton>
+            <p className="mt-3 text-center text-xs text-muted sm:text-sm">
+              {CAMPAIGN_SECTION.ctaNote}
+            </p>
+          </div>
+        </FadeInOnScroll>
       </Container>
     </section>
   );

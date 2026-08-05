@@ -8,7 +8,7 @@ type ContainerProps = {
 };
 
 const baseClassName =
-  "mx-auto w-full max-w-[var(--content-max-width)] px-4 sm:px-6 lg:px-8";
+  "mx-auto w-full max-w-[var(--content-max-width)] px-5 sm:px-6 lg:px-10";
 
 export function Container({
   children,

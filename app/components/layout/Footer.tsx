@@ -23,7 +23,7 @@ export function Footer() {
               </p>
               <p className="text-sm text-muted">{SITE_TAGLINE}</p>
               <p className="max-w-md text-sm leading-relaxed text-muted">
-                千葉エリアの夜職・黒服求人を、専任コンシェルジュが無料でご紹介します。
+                千葉エリアの夜職求人を、専任コンシェルジュが無料でご紹介します。
               </p>
             </div>
 

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { LineButton } from "@/app/components/ui/LineButton";
 import {
   LINE_URL,
@@ -11,7 +12,13 @@ import {
 } from "@/app/lib/constants";
 import { MobileMenu } from "./MobileMenu";
 
+function isNavActive(pathname: string, href: string): boolean {
+  if (href.startsWith("#")) return false;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function Header() {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -49,7 +56,7 @@ export function Header() {
       >
         <div className="mx-auto grid h-[var(--header-height)] w-full max-w-[var(--content-max-width)] grid-cols-[auto_1fr_auto] items-center gap-2 px-4 sm:px-6 lg:px-8">
           <Link
-            href="#home"
+            href="/"
             className="group flex shrink-0 flex-col justify-center gap-0.5 py-1"
             aria-label={`${SITE_NAME} ${SITE_TAGLINE} トップへ`}
           >
@@ -65,15 +72,23 @@ export function Header() {
             className="hidden justify-center gap-0.5 lg:flex"
             aria-label="メインナビゲーション"
           >
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-sm px-2.5 py-1.5 text-[0.6875rem] tracking-wide text-muted transition-colors hover:text-text xl:px-3 xl:text-xs"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const active = isNavActive(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`rounded-sm px-2.5 py-1.5 text-[0.6875rem] tracking-wide transition-colors xl:px-3 xl:text-xs ${
+                    active
+                      ? "font-medium text-pink-dark"
+                      : "text-muted hover:text-text"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center justify-end gap-2">
@@ -120,7 +135,12 @@ export function Header() {
         </div>
       </header>
 
-      <MobileMenu id={menuId} isOpen={isMenuOpen} onClose={closeMenu} />
+      <MobileMenu
+        id={menuId}
+        isOpen={isMenuOpen}
+        onClose={closeMenu}
+        pathname={pathname}
+      />
     </>
   );
 }

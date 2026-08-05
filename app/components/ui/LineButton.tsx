@@ -18,7 +18,7 @@ type LineButtonAsButton = LineButtonBase &
 
 type LineButtonProps = LineButtonAsLink | LineButtonAsButton;
 
-function LineIcon({ size = 20 }: { size?: number }) {
+function LineIcon({ size = 22 }: { size?: number }) {
   return (
     <svg
       aria-hidden="true"
@@ -33,7 +33,7 @@ function LineIcon({ size = 20 }: { size?: number }) {
 }
 
 const baseClass =
-  "line-btn inline-flex items-center justify-center gap-2.5 rounded-full border border-transparent bg-line-green font-bold tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-green disabled:pointer-events-none disabled:opacity-50";
+  "line-btn inline-flex items-center justify-center gap-2.5 rounded-[24px] border border-transparent bg-line-green font-bold tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-line-green disabled:pointer-events-none disabled:opacity-50";
 
 export function LineButton(props: LineButtonProps) {
   const {
@@ -46,22 +46,17 @@ export function LineButton(props: LineButtonProps) {
   } = props;
 
   const sizeClass = large
-    ? "min-h-14 px-8 py-3.5 text-base sm:min-h-[3.75rem] sm:px-10 sm:text-lg"
+    ? "min-h-14 px-8 py-4 text-base sm:min-h-16 sm:px-10 sm:text-lg"
     : compact
       ? "min-h-10 px-4 py-2 text-xs sm:text-sm"
-      : "min-h-11 px-6 py-2.5 text-sm sm:px-7 sm:text-[0.9375rem]";
+      : "min-h-11 px-6 py-2.5 text-sm sm:px-7";
 
   const combined = `${baseClass} ${sizeClass} ${fullWidth ? "w-full" : ""} ${className}`.trim();
 
   const content = (
     <>
-      <LineIcon size={large ? 24 : compact ? 16 : 20} />
+      <LineIcon size={large ? 24 : compact ? 16 : 22} />
       <span>{children}</span>
-      {large ? (
-        <span aria-hidden="true" className="ml-0.5 text-white/90">
-          ›
-        </span>
-      ) : null}
     </>
   );
 

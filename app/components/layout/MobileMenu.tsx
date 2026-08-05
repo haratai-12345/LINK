@@ -9,9 +9,15 @@ type MobileMenuProps = {
   id: string;
   isOpen: boolean;
   onClose: () => void;
+  pathname: string;
 };
 
-export function MobileMenu({ id, isOpen, onClose }: MobileMenuProps) {
+function isNavActive(pathname: string, href: string): boolean {
+  if (href.startsWith("#")) return false;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function MobileMenu({ id, isOpen, onClose, pathname }: MobileMenuProps) {
   const panelRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -83,17 +89,25 @@ export function MobileMenu({ id, isOpen, onClose }: MobileMenuProps) {
         </div>
 
         <ul className="flex-1 overflow-y-auto px-3 py-3">
-          {NAV_ITEMS.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="flex min-h-11 items-center px-3 text-sm text-text hover:bg-pink-light"
-                onClick={onClose}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const active = isNavActive(pathname, item.href);
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`flex min-h-11 items-center rounded-md px-3 text-sm ${
+                    active
+                      ? "bg-pink-light font-medium text-pink-dark"
+                      : "text-text hover:bg-pink-light/60"
+                  }`}
+                  onClick={onClose}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="border-t border-border p-4">

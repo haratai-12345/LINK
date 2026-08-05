@@ -1,35 +1,37 @@
 import { Container } from "@/app/components/ui/Container";
 import { FlowCard } from "@/app/components/sections/FlowCard";
-import { FLOW_STEPS } from "@/app/lib/constants";
+import { FLOW_STEPS, FLOW_SUBTITLE } from "@/app/lib/constants";
 
 export function FlowSection() {
   return (
     <section
       id="flow"
       aria-labelledby="flow-heading"
-      className="relative bg-[linear-gradient(180deg,#fff9f6_0%,#ffffff_100%)] py-6 sm:py-8"
+      className="home-section bg-section-pink"
     >
-      <Container>
-        <div className="mb-4 flex items-center gap-2 sm:mb-5">
-          <span aria-hidden="true" className="text-pink-dark">
-            🐾
-          </span>
+      <Container className="home-container !max-w-[75rem] !px-5 lg:!px-8">
+        <div className="home-section-heading max-w-2xl">
+          <p className="mb-2 text-xs font-medium tracking-widest text-pink-dark uppercase">
+            Flow
+          </p>
           <h2
             id="flow-heading"
-            className="font-serif text-lg text-text sm:text-xl"
+            className="font-serif text-[clamp(1.75rem,6.5vw,2.125rem)] text-text"
           >
             ご利用の流れ
           </h2>
-          <span aria-hidden="true" className="text-pink/60">
-            ♡
-          </span>
+          <p className="mt-2.5 text-[0.9375rem] leading-relaxed text-muted sm:mt-3 sm:text-base">
+            {FLOW_SUBTITLE}
+          </p>
         </div>
 
-        <div className="flow-scroll -mx-4 flex gap-3.5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:gap-6">
           {FLOW_STEPS.map((step) => (
-            <FlowCard key={step.step} step={step} />
+            <li key={step.imageSrc} className="min-w-0">
+              <FlowCard step={step} />
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
     </section>
   );
