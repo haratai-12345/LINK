@@ -1,4 +1,3 @@
-import { MascotImage } from "@/app/components/brand/MascotImage";
 import { LineButton } from "@/app/components/ui/LineButton";
 import { LINE_CTA_LABEL, LINE_URL } from "@/app/lib/constants";
 
@@ -7,7 +6,7 @@ type LineCtaBlockProps = {
   label?: string;
   note?: string;
   large?: boolean;
-  showMascot?: boolean;
+  align?: "left" | "center";
   className?: string;
 };
 
@@ -16,30 +15,19 @@ export function LineCtaBlock({
   label = LINE_CTA_LABEL,
   note,
   large = true,
-  showMascot = false,
+  align = "center",
   className = "",
 }: LineCtaBlockProps) {
+  const alignClass =
+    align === "left" ? "line-cta-block--left" : "line-cta-block--center";
+
   return (
-    <div className={`mx-auto w-full max-w-lg space-y-4 ${className}`.trim()}>
-      {showMascot ? (
-        <div className="flex justify-center pb-1">
-          <MascotImage variant="invite" size="md" />
-        </div>
-      ) : null}
-      <p className="text-center text-[0.9375rem] font-medium leading-relaxed text-text sm:text-base">
-        {lead}
-      </p>
-      <LineButton
-        href={LINE_URL}
-        large={large}
-        fullWidth
-        className="min-h-[52px] shadow-[0_10px_28px_rgb(6_199_85/0.32)] sm:min-h-[56px]"
-      >
+    <div className={`line-cta-block ${alignClass} ${className}`.trim()}>
+      <p className="line-cta-block__lead">{lead}</p>
+      <LineButton href={LINE_URL} large={large} className="line-cta-block__btn">
         {label}
       </LineButton>
-      {note ? (
-        <p className="text-center text-xs leading-relaxed text-muted sm:text-sm">{note}</p>
-      ) : null}
+      {note ? <p className="line-cta-block__note">{note}</p> : null}
     </div>
   );
 }

@@ -55,11 +55,26 @@ export const HERO_DESCRIPTION =
 
 export const HERO_REASSURANCE = "無理な勧誘はありません";
 
-export const BRAND_GUIDE = {
-  afterTrust:
-    "不安なことは、ひとつずつ一緒に整理していきましょう。相談だけでも、気軽にお声がけください。",
-  strengths:
-    "千葉エリアに詳しいコンシェルジュが、あなたの希望に合わせて店舗をご案内します。",
+export const CONCIERGE_SECTION = {
+  label: "LINK CONCIERGE",
+  title: "求人を紹介するだけではなく、選ぶための判断材料まで。",
+  description:
+    "希望条件を聞くだけでなく、掲載情報と実際の条件の違い、客層、働きやすさまで、確認できる範囲で正直にご案内します。",
+  trustItems: ["相談無料", "無理な勧誘なし", "LINEで完結"] as const,
+  highlights: [
+    {
+      num: "01",
+      text: "掲載時給だけでなく、実際にもらえるラインを事前に確認できる",
+    },
+    {
+      num: "02",
+      text: "専任コンシェルジュが、面接までの準備と日程調整をサポート",
+    },
+    {
+      num: "03",
+      text: "お店とのやり取りで困ったときも、間に入って相談に乗れる",
+    },
+  ] as const,
 } as const;
 
 /** Hero メインビジュアル（面談風景） */
@@ -185,49 +200,55 @@ export const STRENGTHS_SECTION = {
 
 export type RealInfoIcon =
   | "salary"
+  | "atmosphere"
+  | "shift"
+  | "support"
   | "interview"
-  | "paySystem"
-  | "mediation"
-  | "fit";
+  | "gap";
 
 export const REAL_INFO_SECTION = {
-  title: "面接まで行って条件が変わる、そんな心配は不要です。",
+  label: "REAL INFORMATION",
+  title: "求人票だけでは分からない情報",
   description:
-    "求人サイトには目を引く高時給が並びますが、実際に面接へ行くと「条件が違う」と説明されることも珍しくありません。LINKでは、紹介前にリアルな条件をお伝えします。",
-  closing:
-    "自分一人で探すより、事前に知ってから選べる。掲載時給と実際の条件のギャップで後悔しないために、コンシェルジュが正直にお伝えします。",
-  ctaLead: "求人票では分からない情報を、LINEで丁寧にご案内します。",
-  buttonLabel: "LINEでリアルな条件を聞く",
+    "応募する前に知っておきたいことを、LINEで個別にお伝えします。掲載内容と実際の条件のギャップで後悔しないために。",
+  ctaLead: "応募する前に知っておきたいことを、LINEで個別にお伝えします。",
+  buttonLabel: "LINEでリアルな条件を確認する",
   items: [
     {
-      title: "掲載時給と、実際に貰えるラインは違うことがある",
+      title: "実際の給与条件",
       description:
-        "他サイトでは過剰に高い時給が並ぶ一方、面接で理由をつけられ、想定の半分近い条件にされるケースも。LINKでは採用されやすい時給帯や平均ラインを、紹介前にお伝えします。",
+        "掲載時給と、実際にもらえるラインの違い。バック・控除・平均時給まで、確認できる範囲でお伝えします。",
       icon: "salary" as const,
     },
     {
-      title: "面接当日まで、条件のズレを知らないまま進まない",
+      title: "客層やお店の雰囲気",
       description:
-        "「体験入店後に決まる」「条件により異なる」など、曖昧な説明のまま足を運ぶ必要はありません。事前に確認できることを、一つひとつ整理してご案内します。",
+        "どんなお客様が多いか、店内の雰囲気やスタッフの雰囲気まで。合いそうかどうかを一緒に見極めます。",
+      icon: "atmosphere" as const,
+    },
+    {
+      title: "シフトの相談しやすさ",
+      description:
+        "週何日から可能か、終電や送迎の相談がしやすいか。ライフスタイルに合わせた働き方も確認できます。",
+      icon: "shift" as const,
+    },
+    {
+      title: "未経験者へのサポート",
+      description:
+        "研修の有無、フォロー体制、初出勤までの流れ。はじめてでも安心して進められるかを事前にお伝えします。",
+      icon: "support" as const,
+    },
+    {
+      title: "面接前に確認したい注意点",
+      description:
+        "持ち物、服装、当日の流れ。「聞いていなかった」で困らないよう、事前に整理してご案内します。",
       icon: "interview" as const,
     },
     {
-      title: "バック・控除・ノルマなど、稼ぎ方のリアルも先に",
+      title: "掲載内容と実際の条件の違い",
       description:
-        "求人票に載らない給与システムの詳細も、入店前にご説明。働き始めてから「聞いていなかった」と困らないよう、確認できることは先に共有します。",
-      icon: "paySystem" as const,
-    },
-    {
-      title: "お店とのトラブルも、LINKが間に入れる",
-      description:
-        "自分で応募すると、店舗とのやり取りは一対一になりがちで、対処が難しいことも。LINK経由なら、困ったことがあってもコンシェルジュが間に入り、相談に乗れます。",
-      icon: "mediation" as const,
-    },
-    {
-      title: "あなたに本当に合う店舗か、一緒に見極める",
-      description:
-        "採用基準や店内の雰囲気、未経験でも働きやすいかまで。条件の数字だけでなく、人として合うかどうかも含めてご提案します。",
-      icon: "fit" as const,
+        "「体験入店後に決まる」「条件により異なる」など、曖昧な説明のまま進まないために。事前確認を大切にしています。",
+      icon: "gap" as const,
     },
   ],
 } as const;
@@ -365,8 +386,7 @@ export const BOTTOM_LINE_CTA = {
     "「自分に合うお店が分からない」「条件のリアルが不安」——そんな気持ちから、始めてみませんか。",
   ctaLead: "求人票では分からない情報も、LINEで丁寧にお伝えします。",
   reassurance: "相談無料 · 無理な勧誘はありません",
-  guideMessage:
-    "はじめての方も、お気軽にメッセージをください。猫コンシェルジュがお待ちしています。",
+  guideMessage: "はじめての方も、お気軽にメッセージをください。",
 } as const;
 
 /* ── Search tags ── */

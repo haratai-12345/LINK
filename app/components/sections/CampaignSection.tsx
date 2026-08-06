@@ -5,7 +5,7 @@ import { CAMPAIGN_SECTION, CAMPAIGNS, type CampaignIcon } from "@/app/lib/consta
 import { Check, Gift, MessageCircle, Shirt } from "lucide-react";
 
 function CampaignIconGraphic({ icon }: { icon: CampaignIcon }) {
-  const className = "h-8 w-8 text-pink-dark sm:h-9 sm:w-9";
+  const className = "h-6 w-6 text-charcoal/70 sm:h-7 sm:w-7";
 
   switch (icon) {
     case "referral":
@@ -46,15 +46,15 @@ export function CampaignSection() {
         {CAMPAIGNS.map((campaign, index) => (
           <li key={campaign.id}>
             <FadeInOnScroll delay={index * 100}>
-              <article className="brand-card flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:gap-6 sm:p-6 lg:p-8">
-                <div className="flex shrink-0 items-center justify-center self-start sm:w-[5.5rem]">
-                  <span className="icon-wrap flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-2xl border border-border bg-[linear-gradient(180deg,#ffffff_0%,#fff9f7_100%)] sm:h-20 sm:w-20">
+              <article className="brand-card flex flex-col gap-5 rounded-[var(--radius-card)] p-5 sm:flex-row sm:items-start sm:gap-6 sm:p-6 lg:p-7">
+                <div className="flex shrink-0 items-center justify-center self-start sm:w-[4.5rem]">
+                  <span className="icon-wrap flex h-14 w-14 items-center justify-center rounded-[var(--radius-btn)] border border-border bg-[#faf8f5] sm:h-16 sm:w-16">
                     <CampaignIconGraphic icon={campaign.icon} />
                   </span>
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <span className="inline-flex rounded-full border border-pink/30 bg-pink-light px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.22em] text-pink-dark">
+                  <span className="inline-flex rounded-[var(--radius-btn)] border border-border bg-[#faf8f5] px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.18em] text-muted">
                     LIMITED
                   </span>
 
@@ -93,7 +93,6 @@ export function CampaignSection() {
           lead={CAMPAIGN_SECTION.ctaLead}
           label={CAMPAIGN_SECTION.ctaLabel}
           note={CAMPAIGN_SECTION.ctaNote}
-          showMascot
         />
       </FadeInOnScroll>
     </SectionShell>

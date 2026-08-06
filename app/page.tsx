@@ -1,5 +1,6 @@
 import { Hero } from "@/app/components/sections/Hero";
 import { TrustPointsSection } from "@/app/components/sections/TrustPointsSection";
+import { ConciergeSection } from "@/app/components/sections/ConciergeSection";
 import { RealInfoSection } from "@/app/components/sections/RealInfoSection";
 import { StrengthsSection } from "@/app/components/sections/StrengthsSection";
 import { ReviewsSection } from "@/app/components/sections/ReviewsSection";
@@ -13,6 +14,7 @@ export default function Home() {
     <>
       <Hero />
       <TrustPointsSection />
+      <ConciergeSection />
       <RealInfoSection />
       <StrengthsSection />
       <ReviewsSection />

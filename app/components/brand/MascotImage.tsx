@@ -2,10 +2,12 @@ import Image from "next/image";
 import { MASCOT_IMAGES, type MascotVariant } from "@/app/lib/constants";
 
 type MascotSize = "sm" | "md" | "lg" | "hero";
+type MascotFit = "inline" | "card" | "cta" | "feature";
 
 type MascotImageProps = {
   variant: MascotVariant;
   size?: MascotSize;
+  fit?: MascotFit;
   priority?: boolean;
   className?: string;
 };
@@ -20,10 +22,61 @@ const sizeClass: Record<MascotSize, string> = {
 export function MascotImage({
   variant,
   size = "md",
+  fit = "inline",
   priority = false,
   className = "",
 }: MascotImageProps) {
   const mascot = MASCOT_IMAGES[variant];
+
+  if (fit === "card") {
+    return (
+      <div className={`mascot-image mascot-image--card ${className}`.trim()}>
+        <Image
+          src={mascot.src}
+          alt=""
+          width={mascot.width}
+          height={mascot.height}
+          priority={priority}
+          aria-hidden
+          className="mascot-image__asset h-full w-full object-contain object-bottom"
+          sizes="(max-width: 640px) 116px, (max-width: 1024px) 140px, 160px"
+        />
+      </div>
+    );
+  }
+
+  if (fit === "cta") {
+    return (
+      <div className={`mascot-image mascot-image--cta ${className}`.trim()}>
+        <Image
+          src={mascot.src}
+          alt=""
+          width={mascot.width}
+          height={mascot.height}
+          priority={priority}
+          aria-hidden
+          className="mascot-image__asset h-full w-full object-contain object-bottom"
+          sizes="(max-width: 640px) 104px, 120px"
+        />
+      </div>
+    );
+  }
+
+  if (fit === "feature") {
+    return (
+      <div className={`mascot-image mascot-image--feature ${className}`.trim()}>
+        <Image
+          src={mascot.src}
+          alt={mascot.alt}
+          width={mascot.width}
+          height={mascot.height}
+          priority={priority}
+          className="mascot-image__asset h-full w-full object-contain object-bottom"
+          sizes="(max-width: 640px) 144px, 176px"
+        />
+      </div>
+    );
+  }
 
   return (
     <div

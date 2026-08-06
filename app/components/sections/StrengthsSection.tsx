@@ -1,9 +1,8 @@
-import { BrandGuide } from "@/app/components/brand/BrandGuide";
 import { FadeInOnScroll } from "@/app/components/ui/FadeInOnScroll";
 import { SectionHeading } from "@/app/components/ui/SectionHeading";
 import { SectionShell } from "@/app/components/ui/SectionShell";
 import { BrandCard } from "@/app/components/ui/BrandCard";
-import { BRAND_GUIDE, STRENGTHS_SECTION, type StrengthIcon } from "@/app/lib/constants";
+import { STRENGTHS_SECTION, type StrengthIcon } from "@/app/lib/constants";
 import {
   CalendarDays,
   HeartHandshake,
@@ -44,19 +43,13 @@ export function StrengthsSection() {
         />
       </FadeInOnScroll>
 
-      <BrandGuide
-        message={BRAND_GUIDE.strengths}
-        variant="pointing"
-        className="mb-6 sm:mb-8"
-      />
-
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
         {STRENGTHS_SECTION.items.map((item, index) => (
           <li key={item.title} className="flex">
             <FadeInOnScroll className="w-full" delay={index * 70}>
-              <BrandCard className="p-5 sm:p-6">
+              <BrandCard className="rounded-[var(--radius-card)] p-5 sm:p-6">
                 <div className="flex items-start gap-4">
-                  <span className="icon-wrap flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-[#fff9f7]">
+                  <span className="icon-wrap flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-btn)] border border-border/80 bg-[#faf8f5]">
                     <StrengthIconGraphic icon={item.icon} />
                   </span>
                   <div className="flex min-h-[4.5rem] flex-col gap-2">

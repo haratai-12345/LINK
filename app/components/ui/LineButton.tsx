@@ -33,7 +33,7 @@ function LineIcon({ size = 22 }: { size?: number }) {
 }
 
 const baseClass =
-  "line-btn inline-flex items-center justify-center gap-2.5 rounded-[24px] border border-transparent bg-[#06C755] font-bold tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C755] disabled:pointer-events-none disabled:opacity-50 [&_svg]:text-white";
+  "line-btn inline-flex items-center justify-center gap-2 rounded-[var(--radius-btn)] border border-transparent bg-[#06C755] font-semibold tracking-wide text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#06C755] disabled:pointer-events-none disabled:opacity-50 [&_svg]:text-white";
 
 export function LineButton(props: LineButtonProps) {
   const {
@@ -46,10 +46,10 @@ export function LineButton(props: LineButtonProps) {
   } = props;
 
   const sizeClass = large
-    ? "min-h-14 px-8 py-4 text-base sm:min-h-16 sm:px-10 sm:text-lg"
+    ? "min-h-[3rem] px-6 py-3 text-[0.9375rem] sm:min-h-[3.125rem] sm:px-7"
     : compact
       ? "min-h-10 px-4 py-2 text-xs sm:text-sm"
-      : "min-h-11 px-6 py-2.5 text-sm sm:px-7";
+      : "min-h-11 px-5 py-2.5 text-sm sm:px-6";
 
   const combined = `${baseClass} ${sizeClass} ${fullWidth ? "w-full" : ""} ${className}`.trim();
 

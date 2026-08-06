@@ -32,7 +32,7 @@ export function SectionHeading({
       className={`flex max-w-[40rem] flex-col gap-2 sm:gap-2.5 ${alignClassName} ${className}`.trim()}
     >
       {eyebrow ? (
-        <p className="text-[0.6875rem] font-medium uppercase tracking-[0.2em] text-pink-dark">
+        <p className="text-[0.625rem] font-medium uppercase tracking-[0.28em] text-champagne">
           {eyebrow}
         </p>
       ) : null}
