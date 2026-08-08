@@ -1,7 +1,7 @@
 import { Container } from "@/app/components/ui/Container";
 import { LineButton } from "@/app/components/ui/LineButton";
 import { LINE_URL } from "@/app/lib/constants";
-import { JOBS_PAGE } from "@/app/lib/stores";
+import { JOBS_PAGE } from "@/app/lib/jobs";
 
 export function JobsBottomCta() {
   return (

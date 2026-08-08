@@ -2,29 +2,28 @@
 
 import { useState } from "react";
 import {
-  DEFAULT_STORE_FILTERS,
+  DEFAULT_JOB_FILTERS,
   FILTER_AREAS,
-  FILTER_CATEGORIES,
-  FILTER_EMPLOYMENT_TYPES,
-  type StoreFilterValues,
-} from "@/app/lib/stores";
+  FILTER_INDUSTRIES,
+  FILTER_SHIFTS,
+  type JobFilterValues,
+} from "@/app/lib/jobs";
 
 type JobFiltersProps = {
-  onChange: (filters: StoreFilterValues) => void;
+  onChange: (filters: JobFilterValues) => void;
 };
 
 const TOGGLE_FILTERS = [
   { key: "beginnerFriendly" as const, label: "未経験歓迎" },
   { key: "highPay" as const, label: "高時給" },
   { key: "pickup" as const, label: "送りあり" },
-  { key: "dormitory" as const, label: "寮あり" },
-  { key: "dailyPay" as const, label: "日払いあり" },
+  { key: "dailyPayAvailable" as const, label: "日払いあり" },
 ];
 
 export function JobFilters({ onChange }: JobFiltersProps) {
-  const [filters, setFilters] = useState<StoreFilterValues>(DEFAULT_STORE_FILTERS);
+  const [filters, setFilters] = useState<JobFilterValues>(DEFAULT_JOB_FILTERS);
 
-  const update = (patch: Partial<StoreFilterValues>) => {
+  const update = (patch: Partial<JobFilterValues>) => {
     const next = { ...filters, ...patch };
     setFilters(next);
     onChange(next);
@@ -60,29 +59,29 @@ export function JobFilters({ onChange }: JobFiltersProps) {
           業種
           <select
             className={selectClassName}
-            value={filters.category}
-            onChange={(e) => update({ category: e.target.value })}
+            value={filters.industry}
+            onChange={(e) => update({ industry: e.target.value })}
           >
             <option value="">すべて</option>
-            {FILTER_CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
+            {FILTER_INDUSTRIES.map((industry) => (
+              <option key={industry} value={industry}>
+                {industry}
               </option>
             ))}
           </select>
         </label>
 
         <label className="flex flex-col gap-1.5 text-xs text-muted">
-          雇用形態
+          シフト
           <select
             className={selectClassName}
-            value={filters.employmentType}
-            onChange={(e) => update({ employmentType: e.target.value })}
+            value={filters.shift}
+            onChange={(e) => update({ shift: e.target.value })}
           >
             <option value="">すべて</option>
-            {FILTER_EMPLOYMENT_TYPES.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {FILTER_SHIFTS.map((shift) => (
+              <option key={shift} value={shift}>
+                {shift}
               </option>
             ))}
           </select>

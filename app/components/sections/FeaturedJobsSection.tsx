@@ -2,12 +2,12 @@ import Link from "next/link";
 import { FadeInOnScroll } from "@/app/components/ui/FadeInOnScroll";
 import { SectionHeading } from "@/app/components/ui/SectionHeading";
 import { SectionShell } from "@/app/components/ui/SectionShell";
-import { FeaturedJobCard } from "@/app/components/sections/FeaturedJobCard";
+import { JobCard } from "@/app/components/JobCard";
 import { FEATURED_JOBS, JOBS_PAGE_PATH } from "@/app/lib/constants";
-import { getFeaturedStores } from "@/app/lib/stores";
+import { getFeaturedJobs } from "@/app/lib/jobs";
 
 export function FeaturedJobsSection() {
-  const stores = getFeaturedStores(3);
+  const jobs = getFeaturedJobs();
 
   return (
     <SectionShell ariaLabelledBy="featured-jobs-heading" tone="muted" connect>
@@ -22,11 +22,11 @@ export function FeaturedJobsSection() {
         />
       </FadeInOnScroll>
 
-      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-5">
-        {stores.map((store, index) => (
-          <li key={store.id} className="flex">
-            <FadeInOnScroll className="w-full" delay={index * 90}>
-              <FeaturedJobCard store={store} />
+      <ul className="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-6">
+        {jobs.map((job, index) => (
+          <li key={job.id} className="flex min-w-0">
+            <FadeInOnScroll className="w-full min-w-0" delay={index * 90}>
+              <JobCard job={job} />
             </FadeInOnScroll>
           </li>
         ))}

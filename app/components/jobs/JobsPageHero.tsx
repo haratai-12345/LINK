@@ -1,6 +1,6 @@
 import { Container } from "@/app/components/ui/Container";
 import { LineButton } from "@/app/components/ui/LineButton";
-import { JOBS_PAGE } from "@/app/lib/stores";
+import { JOBS_PAGE } from "@/app/lib/jobs";
 import { LINE_URL } from "@/app/lib/constants";
 
 export function JobsPageHero() {
