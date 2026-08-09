@@ -1,16 +1,24 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ChevronLeft, MapPin, TrainFront } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Container } from "@/app/components/ui/Container";
 import { LineButton } from "@/app/components/ui/LineButton";
+import { JsonLd } from "@/app/components/seo/JsonLd";
 import { LINE_URL, SITE_NAME } from "@/app/lib/constants";
 import {
   getAllJobSlugs,
   getJobBySlug,
+  getJobImages,
   JOBS_PAGE,
   type Job,
 } from "@/app/lib/jobs";
+import {
+  buildJobDetailMetadata,
+  buildJobPostingJsonLd,
+  getJobPageHeading,
+} from "@/app/lib/seo";
+import { JobDetailGallery } from "@/app/components/jobs/JobDetailGallery";
 
 type JobDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -30,10 +38,7 @@ export async function generateMetadata({
     return { title: `求人詳細｜${SITE_NAME}` };
   }
 
-  return {
-    title: `${job.name}｜求人詳細｜${SITE_NAME}`,
-    description: `${job.area} · ${job.industry}。体入時給 ${job.trialHourly}、本入時給 ${job.regularHourly}。`,
-  };
+  return buildJobDetailMetadata(job);
 }
 
 type DetailRowProps = {
@@ -77,8 +82,6 @@ function buildDetailSections(job: Job): DetailSectionProps[] {
       rows: [
         { label: "店舗名", value: job.name },
         { label: "業種", value: job.industry },
-        { label: "エリア", value: job.area },
-        { label: "最寄り駅", value: job.stations },
       ],
     },
     {
@@ -108,6 +111,13 @@ function buildDetailSections(job: Job): DetailSectionProps[] {
         { label: "タトゥー相談", value: job.tattoo },
       ],
     },
+    {
+      title: "アクセス",
+      rows: [
+        { label: "エリア", value: job.area },
+        { label: "最寄り駅", value: job.stations },
+      ],
+    },
   ];
 }
 
@@ -120,37 +130,35 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
   }
 
   const sections = buildDetailSections(job);
+  const images = getJobImages(job);
+  const jobPostingJsonLd = buildJobPostingJsonLd(job);
 
   return (
     <div className="bg-ivory pb-16 pt-6 sm:pb-20 sm:pt-8">
+      <JsonLd data={jobPostingJsonLd} />
       <Container className="!max-w-[42rem] !px-4 sm:!px-6">
         <Link
           href="/jobs"
           className="mb-6 inline-flex min-h-10 items-center gap-1 text-sm text-muted transition-colors hover:text-charcoal"
         >
           <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-          求人一覧に戻る
+          千葉の求人一覧へ戻る
         </Link>
 
-        <header className="mb-8 space-y-4">
-          <p className="text-xs font-medium tracking-widest text-muted uppercase">
+        <header className="mb-5 sm:mb-6">
+          <p className="mb-4 text-xs font-medium tracking-widest text-muted uppercase">
             Job Detail
           </p>
           <h1 className="font-serif text-2xl leading-snug text-charcoal sm:text-3xl">
-            {job.name}
+            {getJobPageHeading(job)}
           </h1>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-              {job.area}
-            </span>
-            <span>{job.industry}</span>
-          </div>
-          <p className="flex items-start gap-2 text-sm leading-relaxed text-muted">
-            <TrainFront className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            <span className="break-words">{job.stations}</span>
-          </p>
         </header>
+
+        {images.length > 0 && (
+          <div className="mb-5 sm:mb-6">
+            <JobDetailGallery jobName={job.name} images={images} />
+          </div>
+        )}
 
         <div className="space-y-5">
           {sections.map((section) => (

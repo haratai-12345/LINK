@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/app/components/sections/Hero";
 import { TrustPointsSection } from "@/app/components/sections/TrustPointsSection";
 import { ConciergeSection } from "@/app/components/sections/ConciergeSection";
@@ -8,6 +9,9 @@ import { FeaturedJobsSection } from "@/app/components/sections/FeaturedJobsSecti
 import { FlowSection } from "@/app/components/sections/FlowSection";
 import { CampaignSection } from "@/app/components/sections/CampaignSection";
 import { BottomLineCtaSection } from "@/app/components/sections/BottomLineCtaSection";
+import { buildHomeMetadata } from "@/app/lib/seo";
+
+export const metadata: Metadata = buildHomeMetadata();
 
 export default function Home() {
   return (

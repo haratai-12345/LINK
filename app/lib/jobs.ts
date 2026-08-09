@@ -1,3 +1,5 @@
+import { getJobImageAlt } from "@/app/lib/job-image-alt";
+
 export type Job = {
   id: string;
   slug: string;
@@ -25,6 +27,42 @@ export type Job = {
   beginnerFriendly: boolean;
   highPay: boolean;
 };
+
+export type JobImage = {
+  src: string;
+  alt: string;
+};
+
+/** ローカル保存済みの店内写真枚数（slug → 枚数） */
+const JOB_IMAGE_COUNTS: Partial<Record<string, number>> = {
+  "club-runway": 3,
+  "club-ichika": 3,
+  "club-carat": 3,
+  "the-class": 3,
+  "club-ranka": 3,
+  "fabulous-lounge": 3,
+  "club-generation-chiba": 3,
+  "club-harlem": 3,
+  "new-club-roger": 3,
+  "themis": 3,
+  "club-archi": 3,
+};
+
+/** 店舗詳細ページ用の画像一覧を返す */
+export function getJobImages(job: Job): JobImage[] {
+  const count = JOB_IMAGE_COUNTS[job.slug];
+  if (!count) {
+    return [];
+  }
+
+  return Array.from({ length: count }, (_, index) => {
+    const photoNumber = index + 1;
+    return {
+      src: `/images/jobs/${job.slug}/interior-${photoNumber}.jpg`,
+      alt: getJobImageAlt(job, photoNumber),
+    };
+  });
+}
 
 export const JOBS: Job[] = [
   {
