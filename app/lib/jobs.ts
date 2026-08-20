@@ -1,5 +1,22 @@
 import { getJobImageAlt } from "@/app/lib/job-image-alt";
 
+export type JobDetailRow = {
+  label: string;
+  value: string;
+};
+
+export type JobDetailSection = {
+  title: string;
+  rows: JobDetailRow[];
+};
+
+export type JobStorePr = {
+  sectionTitle?: string;
+  paragraphs: string[];
+  recommendationTitle: string;
+  recommendations: string[];
+};
+
 export type Job = {
   id: string;
   slug: string;
@@ -26,6 +43,19 @@ export type Job = {
   dailyPayAvailable: boolean;
   beginnerFriendly: boolean;
   highPay: boolean;
+  /** ページ固有のSEO title（未指定時は自動生成） */
+  seoTitle?: string;
+  /** ページ固有のSEO description（未指定時は自動生成） */
+  seoDescription?: string;
+  /** 求人公開日（YYYY-MM-DD）。未設定時は JobPosting JSON-LD を出力しない */
+  datePosted?: string;
+  /** 求人掲載期限（YYYY-MM-DD）。未設定時は出力しない */
+  validThrough?: string;
+  /** 指定時は標準セクションの代わりにこの内容を表示 */
+  customDetailSections?: JobDetailSection[];
+  storePr?: JobStorePr;
+  /** 詳細ページのLINE注記（未指定時は JOBS_PAGE.lineDetailNote） */
+  detailLineNote?: string;
 };
 
 export type JobImage = {
@@ -46,6 +76,9 @@ const JOB_IMAGE_COUNTS: Partial<Record<string, number>> = {
   "new-club-roger": 3,
   "themis": 3,
   "club-archi": 3,
+  "alice": 1,
+  "vellugue-funabashi": 1,
+  "juliette-lounge": 1,
 };
 
 /** 店舗詳細ページ用の画像一覧を返す */
@@ -429,6 +462,290 @@ export const JOBS: Job[] = [
     beginnerFriendly: true,
     highPay: true,
   },
+  {
+    id: "alice",
+    slug: "alice",
+    name: "ALICE（アリス）",
+    nameKana: "アリス",
+    industry: "ガールズバー",
+    area: "船橋",
+    stations:
+      "JR船橋駅 徒歩4分／京成船橋駅 徒歩1分／千葉県船橋市本町1-11-10",
+    trialHourly: "3,500円〜6,000円",
+    regularHourly: "3,500円〜6,000円",
+    averageHourly: "3,500円〜6,000円",
+    dailyPay: "可能（条件・規定あり）※全額日払いは応相談",
+    businessHours: "19:30〜翌5:00 ※延長営業時は翌6:00まで／定休日なし",
+    shift: "要確認 ※年齢目安18〜27歳程度",
+    lastTrain: "可能",
+    nonAlcohol: "要確認",
+    dressRental:
+      "あり（黒ショートパンツ・ワイシャツ・ヒール付き黒靴を店舗支給）",
+    hairMake: "なし",
+    transport:
+      "あり ※深夜1:00〜始発時間帯／千葉県内中心・都内等遠方も相談可・専属ドライバー常駐",
+    tattoo: "ワンポイント・可愛いデザイン等は相談可能",
+    featured: false,
+    pickup: true,
+    dailyPayAvailable: true,
+    beginnerFriendly: true,
+    highPay: false,
+  },
+  {
+    id: "vellugue-funabashi",
+    slug: "vellugue-funabashi",
+    name: "VELLUGUE Funabashi（ヴェルージュ船橋）",
+    nameKana: "ヴェルージュ船橋",
+    industry: "キャバクラ",
+    area: "船橋",
+    stations: "船橋駅",
+    trialHourly: "3,500円〜10,000円",
+    regularHourly: "3,500円〜10,000円",
+    averageHourly: "要確認",
+    dailyPay: "可能（5,000円〜10,000円）※時給分の全額日払いも応相談",
+    businessHours: "19:00〜翌2:00",
+    shift: "週1日〜OK",
+    lastTrain: "可能",
+    nonAlcohol: "要確認",
+    dressRental: "ドレス・ショートドレス",
+    hairMake: "あり・店内",
+    transport: "あり",
+    tattoo: "可能 ※勤務時は隠す必要あり",
+    featured: false,
+    pickup: true,
+    dailyPayAvailable: true,
+    beginnerFriendly: true,
+    highPay: true,
+    detailLineNote:
+      "「詳しい給与条件を知りたい」「自分の場合いくらの時給になるか知りたい」など、細かい条件についてはLINEでご相談ください。",
+    customDetailSections: [
+      {
+        title: "店舗情報",
+        rows: [
+          { label: "店舗名", value: "VELLUGUE Funabashi（ヴェルージュ船橋）" },
+          { label: "業種", value: "キャバクラ" },
+        ],
+      },
+      {
+        title: "給与",
+        rows: [
+          { label: "本入時給", value: "3,500円〜10,000円" },
+          { label: "保証期間", value: "1ヶ月〜6ヶ月" },
+          {
+            label: "日払い",
+            value: "可能（5,000円〜10,000円）※時給分の全額日払いも応相談",
+          },
+        ],
+      },
+      {
+        title: "各種バック",
+        rows: [
+          { label: "同伴バック", value: "5%〜30%" },
+          { label: "本指名バック", value: "5%〜30%" },
+          { label: "場内バック", value: "5%" },
+          { label: "その他バック", value: "イベント等によるバックあり" },
+        ],
+      },
+      {
+        title: "勤務条件",
+        rows: [
+          { label: "営業時間", value: "19:00〜翌2:00" },
+          { label: "定休日", value: "日曜日" },
+          { label: "最低出勤日数", value: "週1日〜OK" },
+          { label: "終電上がり", value: "可能" },
+          { label: "勤務時の服装", value: "ドレス・ショートドレス" },
+          { label: "ヘアメイク", value: "店内ヘアメイクあり" },
+          { label: "送り", value: "あり" },
+          {
+            label: "送り範囲・料金",
+            value: "20km圏内／5kmごとに500円",
+          },
+          { label: "送り時間", value: "24:00〜" },
+          { label: "タトゥー", value: "可能 ※勤務時は隠す必要あり" },
+          {
+            label: "喫煙について",
+            value:
+              "待機中：喫煙可／フリー席・場内席：禁煙／本指名席：喫煙可",
+          },
+        ],
+      },
+      {
+        title: "採用条件",
+        rows: [
+          {
+            label: "年齢目安",
+            value:
+              "18歳〜35歳程度まで幅広く採用 ※18歳の採用は原則不可・条件により応相談 ※20歳未満の飲酒不可",
+          },
+          { label: "必要な身分証", value: "顔写真付き身分証明書" },
+          {
+            label: "キャストタイプ",
+            value:
+              "オールジャンル（お姉さん系・素人系・ギャル系など幅広く採用）",
+          },
+        ],
+      },
+      {
+        title: "アクセス",
+        rows: [
+          { label: "エリア", value: "船橋" },
+          { label: "最寄り駅", value: "船橋駅" },
+          {
+            label: "住所",
+            value: "千葉県船橋市本町4丁目3-20 モリウチビル8F",
+          },
+        ],
+      },
+    ],
+    storePr: {
+      paragraphs: [
+        "船橋エリアの高級店。",
+        "客単価は3万円〜7万円程度と高めで、会社員・会社役員・経営者・ビジネスオーナーなどのお客様が中心です。",
+        "フリーのお客様も多く、新規のお客様と接点を作りやすい環境です。",
+        "キャストへのサポートにも力を入れており、客引きはありません。",
+      ],
+      recommendationTitle: "こんな方におすすめ",
+      recommendations: [
+        "高時給を狙いたい方",
+        "客単価の高いお店で働きたい方",
+        "フリーの多い環境で指名を増やしたい方",
+        "高級感のある店舗で働きたい方",
+        "お店のサポートを受けながら働きたい方",
+      ],
+    },
+  },
+  {
+    id: "juliette-lounge",
+    slug: "juliette-lounge",
+    name: "Juliette Lounge（ジュリエット ラウンジ）",
+    nameKana: "ジュリエットラウンジ",
+    industry: "キャバクラ",
+    area: "柏",
+    stations: "JR柏駅 徒歩約5分",
+    trialHourly: "4,000円〜8,000円",
+    regularHourly: "4,000円〜8,000円",
+    averageHourly: "6,000円",
+    dailyPay: "5,000円〜 ※柔軟に対応可能",
+    businessHours: "20:00〜翌4:00〜5:00",
+    shift: "週3日〜",
+    lastTrain: "可能",
+    nonAlcohol: "可能",
+    dressRental: "あり",
+    hairMake: "あり・店内",
+    transport: "あり ※範囲は応相談",
+    tattoo: "可能",
+    featured: false,
+    pickup: true,
+    dailyPayAvailable: true,
+    beginnerFriendly: true,
+    highPay: true,
+    seoTitle:
+      "Juliette Lounge（ジュリエット ラウンジ）の求人情報｜柏｜LINK",
+    seoDescription:
+      "柏・JR柏駅徒歩約5分のJuliette Lounge（ジュリエット ラウンジ）のキャバクラ求人情報。体入・本入時給4,000円〜8,000円、各種バック充実。私服勤務・終電上がり・ノンアル対応。LINKから無料相談できます。",
+    customDetailSections: [
+      {
+        title: "店舗情報",
+        rows: [
+          {
+            label: "店舗名",
+            value: "Juliette Lounge（ジュリエット ラウンジ）",
+          },
+          { label: "業種", value: "キャバクラ" },
+          { label: "エリア", value: "柏" },
+          {
+            label: "住所",
+            value: "千葉県柏市柏2-8-16 レイヴェル31 5F",
+          },
+          { label: "アクセス", value: "JR柏駅から徒歩約5分" },
+          { label: "営業時間", value: "20:00〜翌4:00〜5:00" },
+          { label: "定休日", value: "なし（年中無休）" },
+        ],
+      },
+      {
+        title: "給与",
+        rows: [
+          { label: "体入時給", value: "4,000円〜8,000円" },
+          { label: "本入時給", value: "4,000円〜8,000円" },
+          { label: "平均時給", value: "6,000円" },
+          { label: "保証期間", value: "2〜3ヶ月" },
+          { label: "日払い", value: "5,000円〜 ※柔軟に対応可能" },
+        ],
+      },
+      {
+        title: "各種バック",
+        rows: [
+          { label: "同伴バック", value: "6,000円" },
+          { label: "本指名バック", value: "2,000円" },
+          { label: "場内バック", value: "500円" },
+          { label: "ドリンクバック", value: "200円" },
+          { label: "ボトルバック", value: "小計20%" },
+        ],
+      },
+      {
+        title: "勤務条件",
+        rows: [
+          { label: "出勤目安", value: "週3日〜 ※応相談" },
+          { label: "終電上がり", value: "可能" },
+          { label: "1時上がり", value: "可能" },
+          {
+            label: "服装",
+            value:
+              "私服勤務OK ※綺麗めなワンピースなど ※パンツスタイルNG",
+          },
+          { label: "レンタル衣装", value: "あり" },
+          { label: "ヘアメイク", value: "店内ヘアメイクあり" },
+          { label: "送り", value: "あり ※範囲は応相談" },
+          { label: "送り開始", value: "24:00〜" },
+          { label: "タトゥー", value: "可能" },
+          { label: "ノンアルコール勤務", value: "可能" },
+          { label: "待機中の携帯", value: "使用可能" },
+          { label: "外立ち", value: "なし" },
+        ],
+      },
+      {
+        title: "採用条件",
+        rows: [
+          { label: "年齢目安", value: "18歳〜35歳" },
+          { label: "歓迎するタイプ", value: "アナウンサー系・清楚系" },
+          { label: "体入時の身分証", value: "顔写真付き身分証" },
+          {
+            label: "入店時の身分証",
+            value:
+              "顔写真付き身分証＋本籍地記載の住民票、またはパスポート",
+          },
+        ],
+      },
+      {
+        title: "アクセス",
+        rows: [
+          { label: "エリア", value: "柏" },
+          { label: "最寄り駅", value: "JR柏駅 徒歩約5分" },
+          {
+            label: "住所",
+            value: "千葉県柏市柏2-8-16 レイヴェル31 5F",
+          },
+        ],
+      },
+    ],
+    storePr: {
+      sectionTitle: "Juliette Loungeの特徴",
+      paragraphs: [
+        "柏駅から徒歩圏内の好立地にある、豪華で広々とした店内が特徴のキャバクラ。",
+        "高単価なお客様を重視しているため、高収入を目指しやすい環境が整っています。",
+        "フリー接客でもバックが付くため、入店直後やまだ指名が少ない方でも収入につなげやすいのがポイント。",
+        "私服勤務・終電上がり・ノンアル勤務にも対応しており、働き方について相談しやすい店舗です。",
+      ],
+      recommendationTitle: "こんな方におすすめ",
+      recommendations: [
+        "柏エリアで高収入を目指したい方",
+        "清楚系・アナウンサー系の方",
+        "フリーからもしっかり稼ぎたい方",
+        "私服で働きたい方",
+        "終電上がりを希望する方",
+      ],
+    },
+  },
 ];
 
 /** 全求人を返す */
@@ -488,11 +805,13 @@ export const FILTER_AREAS = [
   "千葉",
   "千葉市",
   "松戸",
+  "船橋",
+  "柏",
 ] as const;
 
-export const FILTER_INDUSTRIES = ["キャバクラ"] as const;
+export const FILTER_INDUSTRIES = ["キャバクラ", "ガールズバー"] as const;
 
-export const FILTER_SHIFTS = ["週1日〜", "週2日〜", "要確認"] as const;
+export const FILTER_SHIFTS = ["週1日〜", "週2日〜", "週3日〜", "要確認"] as const;
 
 export function filterJobs(jobs: Job[], filters: JobFilterValues): Job[] {
   return jobs.filter((job) => {
@@ -510,9 +829,9 @@ export function filterJobs(jobs: Job[], filters: JobFilterValues): Job[] {
 /* ── ページコピー ── */
 
 export const JOBS_PAGE = {
-  title: "あなたに合うお仕事を探す",
+  title: "千葉のキャバクラ・夜職求人一覧",
   description:
-    "千葉エリアを中心に、LINKが厳選したキャバクラの求人をご紹介します。掲載していない店舗も多数あるため、希望条件に合う求人はLINEでお気軽にご相談ください。",
+    "千葉エリアを中心に、LINKが厳選したキャバクラ・ガールズバーの求人をご紹介します。掲載していない店舗も多数あるため、希望条件に合う求人はLINEでお気軽にご相談ください。",
   lineDetailNote: "詳しい条件や面接状況はLINEでご案内します",
   storeLineLabel: "LINEで詳細を聞く",
   detailLineLabel: "この求人についてLINEで相談する",

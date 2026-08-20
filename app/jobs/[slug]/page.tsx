@@ -2,36 +2,56 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronLeft } from "lucide-react";
+import { AreaJobsView } from "@/app/components/jobs/AreaJobsView";
+import { JobDetailGallery } from "@/app/components/jobs/JobDetailGallery";
+import { Breadcrumbs } from "@/app/components/seo/Breadcrumbs";
+import { JsonLd } from "@/app/components/seo/JsonLd";
 import { Container } from "@/app/components/ui/Container";
 import { LineButton } from "@/app/components/ui/LineButton";
-import { JsonLd } from "@/app/components/seo/JsonLd";
 import { LINE_URL, SITE_NAME } from "@/app/lib/constants";
+import {
+  getAllAreaPageSlugs,
+  getAreaPageBySlug,
+  getAreaPageForJob,
+  getAreaPagePath,
+  getRelatedJobsInArea,
+} from "@/app/lib/job-areas";
 import {
   getAllJobSlugs,
   getJobBySlug,
   getJobImages,
   JOBS_PAGE,
   type Job,
+  type JobStorePr,
 } from "@/app/lib/jobs";
 import {
+  buildAreaJobsMetadata,
   buildJobDetailMetadata,
   buildJobPostingJsonLd,
   getJobPageHeading,
 } from "@/app/lib/seo";
-import { JobDetailGallery } from "@/app/components/jobs/JobDetailGallery";
 
-type JobDetailPageProps = {
+type JobsSlugPageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export function generateStaticParams() {
-  return getAllJobSlugs().map((slug) => ({ slug }));
+  return [
+    ...getAllJobSlugs().map((slug) => ({ slug })),
+    ...getAllAreaPageSlugs().map((slug) => ({ slug })),
+  ];
 }
 
 export async function generateMetadata({
   params,
-}: JobDetailPageProps): Promise<Metadata> {
+}: JobsSlugPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const areaPage = getAreaPageBySlug(slug);
+
+  if (areaPage) {
+    return buildAreaJobsMetadata(areaPage);
+  }
+
   const job = getJobBySlug(slug);
 
   if (!job) {
@@ -75,7 +95,53 @@ function DetailSection({ title, rows }: DetailSectionProps) {
   );
 }
 
+type DetailProseSectionProps = {
+  storePr: JobStorePr;
+};
+
+function DetailProseSection({ storePr }: DetailProseSectionProps) {
+  return (
+    <section className="rounded-[var(--radius-ui)] border border-[#e8e6e4] bg-surface">
+      <h2 className="border-b border-[#f0eeec] px-5 py-4 font-serif text-lg text-charcoal sm:px-6">
+        {storePr.sectionTitle ?? "店舗PR"}
+      </h2>
+      <div className="space-y-4 px-5 py-5 sm:px-6">
+        {storePr.paragraphs.map((paragraph) => (
+          <p
+            key={paragraph}
+            className="break-words text-sm leading-relaxed text-charcoal"
+          >
+            {paragraph}
+          </p>
+        ))}
+        <div className="pt-1">
+          <p className="mb-3 text-sm font-medium text-charcoal">
+            {storePr.recommendationTitle}
+          </p>
+          <ul className="space-y-2">
+            {storePr.recommendations.map((item) => (
+              <li
+                key={item}
+                className="flex gap-2 text-sm leading-relaxed text-charcoal"
+              >
+                <span className="shrink-0 text-muted" aria-hidden="true">
+                  ・
+                </span>
+                <span className="min-w-0 break-words">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function buildDetailSections(job: Job): DetailSectionProps[] {
+  if (job.customDetailSections) {
+    return job.customDetailSections;
+  }
+
   return [
     {
       title: "店舗情報",
@@ -121,29 +187,83 @@ function buildDetailSections(job: Job): DetailSectionProps[] {
   ];
 }
 
-export default async function JobDetailPage({ params }: JobDetailPageProps) {
-  const { slug } = await params;
-  const job = getJobBySlug(slug);
+function RelatedAreaJobs({ job }: { job: Job }) {
+  const areaPage = getAreaPageForJob(job);
+  const relatedJobs = getRelatedJobsInArea(job);
 
-  if (!job) {
-    notFound();
+  if (!areaPage || relatedJobs.length === 0) {
+    return null;
   }
 
+  return (
+    <nav
+      aria-label="同じエリアの求人"
+      className="mt-8 rounded-[var(--radius-ui)] border border-[#e8e6e4] bg-surface px-5 py-5 sm:px-6"
+    >
+      <h2 className="mb-3 text-sm font-medium text-charcoal">
+        {areaPage.label}エリアの他の求人
+      </h2>
+      <ul className="space-y-2">
+        {relatedJobs.map((relatedJob) => (
+          <li key={relatedJob.slug}>
+            <Link
+              href={`/jobs/${relatedJob.slug}`}
+              className="inline-flex min-h-10 items-center text-sm text-muted transition-colors hover:text-charcoal"
+            >
+              {relatedJob.name}
+              <span className="ml-2 text-xs text-[#d4d0cc]">{relatedJob.industry}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+function JobDetailView({ job }: { job: Job }) {
   const sections = buildDetailSections(job);
   const images = getJobImages(job);
   const jobPostingJsonLd = buildJobPostingJsonLd(job);
+  const areaPage = getAreaPageForJob(job);
 
   return (
     <div className="bg-ivory pb-16 pt-6 sm:pb-20 sm:pt-8">
-      <JsonLd data={jobPostingJsonLd} />
+      {jobPostingJsonLd && <JsonLd data={jobPostingJsonLd} />}
       <Container className="!max-w-[42rem] !px-4 sm:!px-6">
-        <Link
-          href="/jobs"
-          className="mb-6 inline-flex min-h-10 items-center gap-1 text-sm text-muted transition-colors hover:text-charcoal"
-        >
-          <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-          千葉の求人一覧へ戻る
-        </Link>
+        <Breadcrumbs
+          items={[
+            { label: "ホーム", href: "/" },
+            { label: "求人を探す", href: "/jobs" },
+            ...(areaPage
+              ? [
+                  {
+                    label: areaPage.breadcrumbLabel,
+                    href: getAreaPagePath(areaPage.slug),
+                  },
+                ]
+              : []),
+            { label: job.name },
+          ]}
+        />
+
+        <div className="mb-6 flex flex-col gap-2">
+          {areaPage && (
+            <Link
+              href={getAreaPagePath(areaPage.slug)}
+              className="inline-flex min-h-10 items-center gap-1 text-sm text-muted transition-colors hover:text-charcoal"
+            >
+              <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              {areaPage.listBackLabel}
+            </Link>
+          )}
+          <Link
+            href="/jobs"
+            className="inline-flex min-h-10 items-center gap-1 text-sm text-muted transition-colors hover:text-charcoal"
+          >
+            <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+            千葉の求人一覧へ戻る
+          </Link>
+        </div>
 
         <header className="mb-5 sm:mb-6">
           <p className="mb-4 text-xs font-medium tracking-widest text-muted uppercase">
@@ -164,11 +284,14 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
           {sections.map((section) => (
             <DetailSection key={section.title} {...section} />
           ))}
+          {job.storePr && <DetailProseSection storePr={job.storePr} />}
         </div>
+
+        <RelatedAreaJobs job={job} />
 
         <div className="mt-10 rounded-[var(--radius-ui)] border border-[#e8e6e4] bg-surface px-5 py-8 text-center sm:px-8 sm:py-10">
           <p className="mb-5 text-sm leading-relaxed text-muted">
-            {JOBS_PAGE.lineDetailNote}
+            {job.detailLineNote ?? JOBS_PAGE.lineDetailNote}
           </p>
           <LineButton
             href={LINE_URL}
@@ -182,4 +305,21 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
       </Container>
     </div>
   );
+}
+
+export default async function JobsSlugPage({ params }: JobsSlugPageProps) {
+  const { slug } = await params;
+  const areaPage = getAreaPageBySlug(slug);
+
+  if (areaPage) {
+    return <AreaJobsView area={areaPage} />;
+  }
+
+  const job = getJobBySlug(slug);
+
+  if (!job) {
+    notFound();
+  }
+
+  return <JobDetailView job={job} />;
 }

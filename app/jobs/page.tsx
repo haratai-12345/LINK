@@ -9,7 +9,7 @@ export const metadata: Metadata = buildJobsListMetadata();
 export default function JobsPage() {
   return (
     <>
-      <JobsPageHero />
+      <JobsPageHero showAreaLinks />
       <JobsListing />
       <JobsBottomCta />
     </>

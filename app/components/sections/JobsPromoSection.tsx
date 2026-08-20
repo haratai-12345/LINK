@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/app/components/ui/Container";
+import { AreaJobLinks } from "@/app/components/jobs/AreaJobLinks";
 import { JOBS_PAGE_PATH, JOBS_PROMO } from "@/app/lib/constants";
 
 export function JobsPromoSection() {
@@ -25,6 +26,10 @@ export function JobsPromoSection() {
           >
             {JOBS_PROMO.buttonLabel}
           </Link>
+          <div className="mt-6 border-t border-[#f0eeec] pt-6">
+            <p className="mb-3 text-sm font-medium text-text">エリアから求人を探す</p>
+            <AreaJobLinks />
+          </div>
         </div>
       </Container>
     </section>

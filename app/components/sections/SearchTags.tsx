@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { Container } from "@/app/components/ui/Container";
 import { JOBS_PAGE_PATH, SEARCH_TAGS } from "@/app/lib/constants";
+import { getAreaPagePath } from "@/app/lib/job-areas";
 import { Search } from "lucide-react";
+
+const TAG_HREF: Partial<Record<(typeof SEARCH_TAGS)[number], string>> = {
+  "キャバクラ 千葉": getAreaPagePath("chiba"),
+  "ガールズバー 船橋": getAreaPagePath("funabashi"),
+  "ラウンジ 柏": getAreaPagePath("kashiwa"),
+  "キャバクラ 松戸": getAreaPagePath("matsudo"),
+};
 
 export function SearchTags() {
   return (
@@ -24,7 +32,7 @@ export function SearchTags() {
           {SEARCH_TAGS.map((tag) => (
             <li key={tag}>
               <Link
-                href={JOBS_PAGE_PATH}
+                href={TAG_HREF[tag] ?? JOBS_PAGE_PATH}
                 className="tag-pill inline-flex min-h-10 items-center rounded-full border border-[#f0ddd8] bg-ivory px-4 py-2 text-sm text-text"
               >
                 {tag}

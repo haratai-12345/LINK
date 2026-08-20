@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { MASCOT_IMAGES, type MascotVariant } from "@/app/lib/constants";
+import { getPublicPath } from "@/app/lib/seo";
 
 type MascotSize = "sm" | "md" | "lg" | "hero";
 type MascotFit = "inline" | "card" | "cta" | "feature";
@@ -32,7 +33,7 @@ export function MascotImage({
     return (
       <div className={`mascot-image mascot-image--card ${className}`.trim()}>
         <Image
-          src={mascot.src}
+          src={getPublicPath(mascot.src)}
           alt=""
           width={mascot.width}
           height={mascot.height}
@@ -49,7 +50,7 @@ export function MascotImage({
     return (
       <div className={`mascot-image mascot-image--cta ${className}`.trim()}>
         <Image
-          src={mascot.src}
+          src={getPublicPath(mascot.src)}
           alt=""
           width={mascot.width}
           height={mascot.height}
@@ -66,7 +67,7 @@ export function MascotImage({
     return (
       <div className={`mascot-image mascot-image--feature ${className}`.trim()}>
         <Image
-          src={mascot.src}
+          src={getPublicPath(mascot.src)}
           alt={mascot.alt}
           width={mascot.width}
           height={mascot.height}
@@ -84,7 +85,7 @@ export function MascotImage({
       aria-hidden={size !== "hero" ? true : undefined}
     >
       <Image
-        src={mascot.src}
+        src={getPublicPath(mascot.src)}
         alt={size === "hero" ? mascot.alt : ""}
         width={mascot.width}
         height={mascot.height}

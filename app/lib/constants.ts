@@ -3,8 +3,8 @@ export const SITE_TAGLINE = "千葉ナイトコンシェルジュ";
 export const SITE_DESCRIPTION =
   "千葉で夜職を探すなら。専任コンシェルジュが、希望条件に合うお店を無料でご紹介します。";
 
-/** 仮のLINE公式アカウントURL（本番URL確定後に差し替え） */
-export const LINE_URL = "https://line.me/R/ti/p/@placeholder";
+/** 公式LINEアカウントURL */
+export const LINE_URL = "https://lin.ee/Rm6EQQR";
 
 export const LINE_CTA_LABEL = "LINEで無料相談する";
 
@@ -43,6 +43,10 @@ export const FOOTER_LINKS: NavItem[] = [
 /* ── Hero ── */
 
 export const HERO_EYEBROW = "千葉で夜職を探すなら";
+
+/** Hero内のSEO補足（メインコピーは維持） */
+export const HERO_SEO_CONTEXT =
+  "千葉・船橋・松戸・柏のキャバクラ・夜職求人を掲載";
 
 export const HERO_HEADLINE = {
   before: "あなたに",
@@ -394,6 +398,7 @@ export const BOTTOM_LINE_CTA = {
 export const SEARCH_TAGS = [
   "キャバクラ 千葉",
   "ガールズバー 船橋",
+  "キャバクラ 松戸",
   "ラウンジ 柏",
   "寮あり",
   "高収入",

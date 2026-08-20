@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { JobImage } from "@/app/lib/jobs";
+import { getPublicPath } from "@/app/lib/seo";
 
 type JobDetailGalleryProps = {
   jobName: string;
@@ -20,7 +21,7 @@ export function JobDetailGallery({ jobName, images }: JobDetailGalleryProps) {
     >
       <div className="relative aspect-[16/10] max-h-[13.75rem] w-full overflow-hidden sm:max-h-[17.5rem]">
         <Image
-          src={mainImage.src}
+          src={getPublicPath(mainImage.src)}
           alt={mainImage.alt}
           fill
           priority
@@ -41,7 +42,7 @@ export function JobDetailGallery({ jobName, images }: JobDetailGalleryProps) {
               className="relative aspect-[16/10] max-h-[7.5rem] overflow-hidden bg-surface sm:max-h-[8.75rem]"
             >
               <Image
-                src={image.src}
+                src={getPublicPath(image.src)}
                 alt={image.alt}
                 fill
                 className="object-cover object-center"

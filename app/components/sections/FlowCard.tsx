@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { FlowStep } from "@/app/lib/constants";
+import { getPublicPath } from "@/app/lib/seo";
 
 type FlowCardProps = {
   step: FlowStep;
@@ -9,7 +10,7 @@ export function FlowCard({ step }: FlowCardProps) {
   return (
     <article className="flow-card relative aspect-[3/2] w-full overflow-hidden rounded-[var(--radius-ui)] border border-border bg-surface shadow-[var(--shadow-soft)]">
       <Image
-        src={step.imageSrc}
+        src={getPublicPath(step.imageSrc)}
         alt={step.alt}
         fill
         className="block h-full w-full object-cover object-center"

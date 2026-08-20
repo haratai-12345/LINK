@@ -8,6 +8,7 @@ import {
   HERO_HEADLINE,
   HERO_JOBS_BUTTON_LABEL,
   HERO_REASSURANCE,
+  HERO_SEO_CONTEXT,
   JOBS_PAGE_PATH,
   LINE_URL,
 } from "@/app/lib/constants";
@@ -32,6 +33,10 @@ export function Hero() {
               <span className="text-pink-dark">{HERO_HEADLINE.highlight}</span>
               {HERO_HEADLINE.after}
             </h1>
+
+            <p className="hero-fade-in mt-2 text-sm leading-relaxed text-muted">
+              {HERO_SEO_CONTEXT}
+            </p>
 
             <p className="hero-fade-in hero-section__description">{HERO_DESCRIPTION}</p>
 

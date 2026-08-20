@@ -32,7 +32,7 @@ export function FeaturedJobsSection() {
         ))}
       </ul>
 
-      <FadeInOnScroll className="mt-7 flex justify-center sm:mt-8" delay={280}>
+      <FadeInOnScroll className="mt-7 flex flex-col items-center sm:mt-8" delay={280}>
         <Link
           href={JOBS_PAGE_PATH}
           className="inline-flex min-h-[52px] w-full max-w-md items-center justify-center rounded-[var(--radius-ui)] border border-pink-dark bg-surface px-6 py-3 text-[0.9375rem] font-medium text-pink-dark transition-colors hover:border-pink hover:bg-pink-light sm:w-auto sm:min-w-[14rem]"
